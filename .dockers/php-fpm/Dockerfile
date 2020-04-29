@@ -19,8 +19,7 @@ RUN docker-php-ext-install -j$(nproc)\
     xsl \
     opcache \
     bcmath \
-    opcache \
-    zip
+    opcache
 
 
 RUN pecl install -o -f redis  xdebug\
@@ -55,9 +54,6 @@ RUN cd PHP7-forp/ext/forp \
  && make install \ 
  && echo "extension=forp.so" >> /usr/local/etc/php/conf.d/forp.ini
 
-
-RUN apt-get install -y ssmtp
-COPY ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 WORKDIR /code
 CMD ["php-fpm"]

@@ -4,7 +4,7 @@ services:
   nginx:
     image:
       nginx:1.13.5
-    container_name: nginx-er
+    container_name: nginx-s
     # restart: always
     ports:
       - 7755:80
@@ -24,11 +24,9 @@ services:
     build:
       context: ./.dockers/php-fpm
       dockerfile: Dockerfile
-    container_name: php-fpm-er
+    container_name: php-fpm-s
     # restart: always
     depends_on:
-#      - syslog
-#      - mailer
       - postgres
     volumes:
       - ./src:/code
@@ -38,7 +36,7 @@ services:
 
   redis:
     image: redis:3.2
-    container_name: redis-er
+    container_name: redis-s
     # restart: always
     command: redis-server --requirepass ucG3S!HP0
     volumes:
@@ -51,18 +49,18 @@ services:
     - code-network
 
   postgres:
-    image: postgres:9.6
-    container_name: postgres-er
+    image: postgres
+    container_name: postgres-s
     # restart: always
     environment:
       POSTGRES_USER: 'admin'
       POSTGRES_PASSWORD: '123123'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
       POSTGRES_DB: 'geektown'
     ports:
         - "13333:5432"
     volumes:
-      - ./dockers/docker-data/postgresql:/var/lib/postgresql
-      - ./dockers/docker-data/postgresql_data:/var/lib/postgresql/data
+      - ./dockers/docker-data/pstgr:/var/lib/postgresql
     networks:
       - code-network
 
