@@ -1,0 +1,6 @@
+.*
+!.env.example
+!.dockers/
+src/*
+dockers/*
+git
