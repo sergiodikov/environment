@@ -11,15 +11,18 @@ RUN apt-get update && apt-get install -y \
         && apt-get install -y zlib1g-dev \
         libxml2-dev \
         libxslt-dev \
-        libsodium-dev
+        libsodium-dev \
+		libzip-dev
 
 RUN docker-php-ext-install -j$(nproc)\
-    xml \
+    zip \
+	xml \
     xmlrpc \
     xsl \
     opcache \
     bcmath \
-    opcache
+    opcache 
+	 
 
 
 RUN pecl install -o -f redis  xdebug\

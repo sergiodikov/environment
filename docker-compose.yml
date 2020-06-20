@@ -27,7 +27,7 @@ services:
     container_name: php-fpm-s
     # restart: always
     depends_on:
-      - postgres
+      - pgsql
     volumes:
       - ./src:/code
       - ./.dockers/php-fpm/conf/php.ini:/usr/local/etc/php/conf.d/custom.ini
@@ -36,7 +36,7 @@ services:
 
   redis:
     image: redis:3.2
-    container_name: redis-s
+    #container_name: redis-s
     # restart: always
     command: redis-server --requirepass ucG3S!HP0
     volumes:
@@ -48,19 +48,18 @@ services:
     networks:
     - code-network
 
-  postgres:
-    image: postgres
-    container_name: postgres-s
+  pgsql:
+    image: postgres:9.6
+    #container_name: pgsql
     # restart: always
     environment:
       POSTGRES_USER: 'admin'
       POSTGRES_PASSWORD: '123123'
-      PGDATA: '/var/lib/postgresql/data/pgdata'
       POSTGRES_DB: 'geektown'
     ports:
         - "13333:5432"
     volumes:
-      - ./dockers/docker-data/pstgr:/var/lib/postgresql
+      - ./dockers/docker-data/pgsql:/var/lib/postgresql
     networks:
       - code-network
 
